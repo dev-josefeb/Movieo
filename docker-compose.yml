@@ -7,6 +7,10 @@ services:
         ports:
             - 3000:3000      
 
+    frontend-tests:
+        image: movieo_frontend
+        command: npm test
+
     backend:
         build: ./backend
         ports:
@@ -14,6 +18,12 @@ services:
         environment: 
             DB_URL: mongodb://database/movieo
         command: ./docker-entrypoint.sh
+        
+    backend-tests:
+        image: movieo_backend
+        environment: 
+            DB_URL: mongodb://database/movieo
+        command:  npm test
             
     database:
         image: mongo:4.0-xenial
