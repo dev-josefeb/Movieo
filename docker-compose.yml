@@ -13,6 +13,7 @@ services:
             - 3001:3001
         environment: 
             DB_URL: mongodb://database/movieo
+        command: ./docker-entrypoint.sh
             
     database:
         image: mongo:4.0-xenial
