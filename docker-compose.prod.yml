@@ -1,0 +1,32 @@
+version: "3.8"
+
+services: 
+
+    frontend:
+        context: ./frontend
+        dockerfile: Dockerfile.prod
+        image: movieo_web:1.0.0
+        ports:
+            - 80:80    
+        restart: unless-stopped  
+
+    backend:
+        build: ./backend
+        image: movieo_api:1.0.0
+        ports:
+            - 3001:3001
+        environment: 
+            DB_URL: mongodb://database/movieo
+        command: ./docker-entrypoint.sh
+        restart: unless-stopped  
+                    
+    database:
+        image: mongo:4.0-xenial
+        ports: 
+            - 27017:27017
+        volumes: 
+            - movieo:/data/db
+        restart: unless-stopped  
+
+volumes:
+    movieo:
